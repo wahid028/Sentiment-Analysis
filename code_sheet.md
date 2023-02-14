@@ -101,7 +101,15 @@ class CustomDataset(Dataset):
         
 #initialize the customdataset
 dataset = CustomDataset(train_text, train_labels, tokenizer, max_len)
-
+print(len(dataset))
+for item in dataset:
+    print(item['input_ids'][0:10])
+    print(item['attention_mask'][0:10])
+    print(item['targets'])
+    break
+    
+dataloader = DataLoader(dataset, batch_size=2, shuffle=True, num_workers=2)   
+  
 #get value from dataset
 data = dataset[0]
 data.keys()
