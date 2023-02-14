@@ -104,6 +104,7 @@ dataset = CustomDataset(train_text, train_labels, tokenizer, max_len)
 
 #get value from dataset
 data = dataset[0]
+data.keys()
 print(data['review_text'])
 print(data['input_ids'])
 print(data['attention_mask'])
