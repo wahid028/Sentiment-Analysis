@@ -118,3 +118,53 @@ print(data['input_ids'])
 print(data['attention_mask'])
 print(data['targets'])
 ```
+
+
+``` py
+#Model declearation
+class LogisticRegression(nn.Module):
+  def __init__(self, n_input_features):
+    super(LogisticRegression, self).__init__()
+    self.linear = nn.Linear(n_input_features, 1)
+    
+  def forward(self, x):
+    y_predicted = torch.Relu(self.linear(x))
+    return y_predicted
+
+model = LogisticRegression(n_features)
+model
+
+#Training Loop
+def train_val(model, criterion, optimizer, train_loader, val_loader, num_epochs):
+  for epoch in range(num_epochs):
+    total_loss = 0.0
+    valid_loss = 0.0
+    model.train()
+    for inputs, labels in train_loader:
+      optimizer.zero_grad()
+      predict = model(inputs)
+      loss = criterion(predict, labels)
+      loss.backward()
+      optimizer.step()
+      total_loss +=loss.item()
+    avg_training_loss = total_loss / len(train_loader)
+    
+    model.eval()
+    with torch.no_grad():
+      for inputs, labels in val_loader:
+        predict = model(inputs)
+        loss = criterion(predict, labels)
+        total_loss +=loss.item()
+      avg_val_loss = total_loss / len(val_loader)
+
+    print(f'Epoch [{epoch+1}/{num_epochs}], Training Loss: {avg_training_loss:.4f}, validation Loss: {avg_val_loss:.4f}')
+
+
+from torch.optim.optimizer import Optimizer
+num_epochs = 1000
+
+#Train the model for a specified number of epochs
+train_val(model, criterion, optimizer, train_loader, val_loader, num_epochs)
+
+
+```
