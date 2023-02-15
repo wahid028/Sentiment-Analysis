@@ -102,6 +102,7 @@ class CustomDataset(Dataset):
 #initialize the customdataset
 dataset = CustomDataset(train_text, train_labels, tokenizer, max_len)
 print(len(dataset))
+dataset[0]
 for item in dataset:
     print(item['input_ids'][0:10])
     print(item['attention_mask'][0:10])
